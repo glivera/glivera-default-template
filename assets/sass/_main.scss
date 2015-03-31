@@ -1,0 +1,53 @@
+
+html {
+	height: 100%;
+	font: normal 10px/1.33 $font_1;
+	font-weight: 300;
+}
+
+:root {
+}
+
+body {
+	@extend %translate3d;
+	position: relative;
+	height: 100%;
+	overflow: hidden;
+	color: $def_text_color;
+	background: #fff;
+	-webkit-text-size-adjust: none;
+
+	&.no_animation * {
+//		transition: none !important;
+//		animation-play-state: paused !important;
+	}
+}
+
+.disable-hover,
+.disable-hover * {
+	pointer-events: none !important;
+}
+
+body.no_animation * {
+	@include transition(none);
+}
+
+.wrapper {
+}
+
+a {
+	text-decoration: none;
+
+	&:hover,
+	&:focus {
+		text-decoration: underline;
+	}
+
+	&:active {
+	}
+}
+
+.hide {
+	display: none !important;
+}
+

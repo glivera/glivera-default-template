@@ -1,0 +1,73 @@
+//-------------------------------------------------------forms
+.form_cell {
+
+	&.form_cell_v1_mod {
+	}
+}
+
+.form_c_hline {
+
+	&.hline_hide_mod {
+		display : none;
+	}
+}
+
+.form_c_f_w {
+	position: relative;
+
+	&.form_mod_1{
+
+	}
+
+}
+
+.f_c_field:not(.select_rediz) {
+	@extend %e_f_field_v1 !optional;
+	&:focus {
+		@extend %e_f_field_v1_active !optional;
+	}
+	&.form_flex_mod {
+		@extend %global_flex_1_e !optional;
+	}
+
+	&:invalid {
+		@extend %e_f_field_v1_invalid !optional;
+	}
+
+}
+
+
+
+.trigger_block {
+	color: #208dba;
+	cursor: pointer;
+
+	&:hover,
+	&:focus {
+		.trigger_text {
+			border-bottom-color: transparent !important;
+		}
+	}
+
+	&.trigger_b_grey_mod {
+		color: $def_text_color;
+
+		.trigger_text {
+			border-bottom: 1px dashed $def_text_color;
+		}
+
+		&:hover,
+		&:focus {
+			color: #208dba;
+			.trigger_text {
+				border-bottom: 1px dashed #208dba !important;
+			}
+		}
+	}
+}
+
+.trigger_text {
+	border-bottom: 1px dashed #208dba;
+}
+
+//-------------------------------------------------------forms

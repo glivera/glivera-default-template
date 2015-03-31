@@ -1,0 +1,505 @@
+include global_vars
+
+mixin user_block(array, link)
+	if link == true
+		a.user_block(class="#{array.class_mod} #{array.class_mod == 'msg_group_mod' || array.class_mod == 'msg_group_mod popup_mod' ? 'group_' + array.ava.length + '_mod' : '' }", href='', title='')
+			if array.class_mod == 'msg_group_mod' || array.class_mod == 'msg_group_mod popup_mod'
+				each img, index in array.ava
+					.user_avatar_w(class="#{array.class_mod} ava_#{index + 1}_mod")
+						img.user_avatar_img(class="#{array.class_mod}", src='i/#{img}', alt='#{array.name}')
+			else
+				.user_avatar_w(class="#{array.class_mod}")
+					img.user_avatar_img(class="#{array.class_mod}", src='i/#{array.ava}', alt='#{array.name}')
+			if array.class_mod != 'msg_comment_mod'
+				if array.class_mod == 'msg_vendor_mod' || array.class_mod == 'msg_group_mod' || array.class_mod == 'msg_mod' || array.class_mod == 'msg_group_mod popup_mod'
+					.user_name(class="#{array.class_mod}")=array.name + ' ' + array.msg_form
+				else
+					.user_name(class="#{array.class_mod}")=array.name
+
+			if array.user_info != undefined
+				.user_info(class="#{array.class_mod}")= array.user_info
+			if array.class_mod == 'about_mod'
+				.user_edit_ava_butt Edit Picture
+	else
+		.user_block(class="#{array.class_mod} #{array.class_mod == 'msg_group_mod' || array.class_mod == 'msg_group_mod popup_mod' ? 'group_' + array.ava.length + '_mod' : '' }")
+			if array.class_mod == 'msg_group_mod' || array.class_mod == 'msg_group_mod popup_mod'
+				each img, index in array.ava
+					.user_avatar_w(class="#{array.class_mod} ava_#{index + 1}_mod #{array.ava == false ? 'no_img_mod':''}")
+						if array.ava != false
+							img.user_avatar_img(class="#{array.class_mod}", src='i/#{img}', alt='#{array.name}')
+			else
+				.user_avatar_w(class="#{array.class_mod} #{array.ava == false ? 'no_img_mod':''}")
+					if array.ava != false
+						img.user_avatar_img(class="#{array.class_mod}", src='i/#{array.ava}', alt='#{array.name}')
+			if array.class_mod != 'msg_comment_mod' && array.class_mod != 'header_mod' && array.class_mod != 'endorse_mod'
+				if array.class_mod == 'msg_vendor_mod' || array.class_mod == 'msg_group_mod' || array.class_mod == 'msg_mod' || array.class_mod == 'msg_group_mod popup_mod'
+					if array.name_link != undefined
+						a.user_name(class="#{array.class_mod}", href="#{array.name_link}")=array.name + ' ' + array.msg_form
+					else
+						.user_name(class="#{array.class_mod}")=array.name + ' ' + array.msg_form
+				else
+					if array.name_link != undefined
+						a.user_name(class="#{array.class_mod}", href="#{array.name_link}")=array.name
+					else
+						.user_name(class="#{array.class_mod}")=array.name
+			if array.user_info != undefined
+				.user_info(class="#{array.class_mod}")= array.user_info
+			if array.user_second_info != undefined
+				.user_second_info(class="#{array.class_mod}")= array.user_second_info
+			if array.user_text != undefined
+				.user_text(class="#{array.class_mod}")!= array.user_text
+			if array.butt_class != undefined
+				div(class='#{array.butt_class} #{array.class_mod}')= array.butt_text
+			if array.footer_mod == true
+				.user_b_footer(class='#{array.class_mod}')
+					if array.user_location != undefined
+						.user_location(class='#{array.class_mod}')= array.user_location
+					if array.person_in_charge != undefined
+						.user_charge(class='#{array.class_mod}')!= array.person_in_charge
+					if array.tag_list != undefined
+						ul.post_f_list
+							each item in array.tag_list
+								li.post_f_list_item
+									dl.tag_block
+										dt.tag_b_text=item.name
+										dd.tag_b_value=item.count
+			else
+				if array.user_location != undefined
+					.user_location(class='#{array.class_mod}')= array.user_location
+			if array.user_full_text_trigger != undefined
+				.user_full_text(class='#{array.class_mod}')!= array.user_full_text
+				.user_full_text_trigger(class='#{array.class_mod}')= array.user_full_text_trigger
+
+
+mixin paginator_block(block_class_mod, class_mod)
+	-var select_text_2 = {name : [ '10',   '25',   '50']}
+	.paginator_block(class='#{block_class_mod}')
+		ul.list_global.list_g_flex_space-between_mod.paginator_list_mod(class='#{class_mod}')
+			li.list_g_item.paginator_list_mod
+				.butt_v1.white_butt_v3.page_prev_butt.disabled_mod
+			li.list_g_item.paginator_list_mod
+				.butt_v1.white_butt_v3.page_next_butt
+		+form_field_select('Items on page',select_text_2, false,'items_on_page','form_mod_1 paginator_mod','form_mod_1 mod_2', 'select_rediz')
+		.paginator_text(class='#{class_mod}') 1-12 of 26 items
+
+
+mixin form_field(title, field_id, block_class_mod, class_mod, field_class, field_type, clear_butt, placeholder_text)
+	if field_id == false
+		- field_id = title.replace(/\s/g, '_').replace(/[.,:;(){}/?!@#$%&*]/g, '')
+	else
+		- field_id = field_id.replace(/\s/g, '_').replace(/[.,:;(){}/?!@#$%&*]/g, '')
+	if field_class == undefined
+		- var field_class = ''
+	if field_type === undefined
+		- var field_type = 'text'
+	dl.form_cell(class='#{block_class_mod}')
+		dt.form_c_hline(class='#{class_mod}')
+			label(for='#{field_id}') #{title}
+		dd.form_c_f_w(class='#{class_mod}')
+			if field_type === 'file'
+				input.f_c_field(type='file' id='#{field_id}', class='#{field_class} #{clear_butt != undefined ? "clear_butt_mod" : ""}', placeholder='#{placeholder_text != undefined ? placeholder_text:title}')
+				span.f_c_field_file_field
+					span.f_c_field_file_text #{title}
+					span.f_c_field_file_butt Choose File
+			else if field_type === 'textarea'
+				textarea.f_c_field(id='#{field_id}', class='#{field_class} #{clear_butt != undefined ? "clear_butt_mod" : ""}', placeholder='#{placeholder_text != undefined ? placeholder_text:title}')
+			else
+				input.f_c_field(type='#{field_type}' id='#{field_id}', class='#{field_class} #{clear_butt != undefined ? "clear_butt_mod" : ""}', placeholder='#{placeholder_text != undefined ? placeholder_text:title}')
+			if clear_butt !== undefined && clear_butt !== false
+				span.f_c_field_clear_butt(class='#{clear_butt}')
+
+mixin lb_rb_check_radio(type,title,name, block_class_mod, class_mod, checked_mod, input_class_mod )
+	if checked_mod == undefined
+		- var checked_mod = false
+	if input_class_mod == undefined
+		- var input_class_mod = ''
+	label.lbl_rb_ch_block(class='#{block_class_mod}')
+		if checked_mod
+			input.lbl_inp_rb_ch(name='#{name}', type='#{type}', class='#{input_class_mod}', checked='checked')
+		else
+			input.lbl_inp_rb_ch(name='#{name}', type='#{type}', class='#{input_class_mod}')
+		span.lbl_rb_ch_text(class='#{class_mod}') #{title}
+
+mixin form_field_select(title, select_text, placeholder, field_id, block_class_mod, class_mod, select_class)
+	dl.form_cell(class='#{block_class_mod}')
+		dt.form_c_hline(class='#{class_mod}')
+			label(for='#{field_id}') #{title}
+		dd.form_c_f_w(class='#{class_mod}')
+			if placeholder != 'false'
+				select.f_c_field(id='#{field_id}' class='#{select_class}', data-placeholder="#{placeholder}")
+					each val in select_text.name
+						option(value='#{val}')= val
+			else
+				select.f_c_field(id='#{field_id}' class='#{select_class}')
+					each val in select_text.name
+						option(value='#{val}')= val
+
+
+mixin form_field_select_choosen(title, array, field_id, block_class_mod, class_mod, select_class, multiple, view)
+	if field_id == false
+		- field_id = title.replace(/\s/g, '_').replace(/[.,:;(){}/?!@#$%&*]/g, '')
+	else
+		- field_id = field_id.replace(/\s/g, '_').replace(/[.,:;(){}/?!@#$%&*]/g, '')
+	dl.form_cell(class='#{block_class_mod}')
+		dt.form_c_hline(class='#{class_mod}')
+			label(for='#{field_id}') #{title}
+		dd.form_c_f_w(class='#{class_mod}')
+			if multiple == true
+				select.f_c_field(id='#{field_id}', class='#{select_class}', data-placeholder="#{title}",multiple)
+					option
+					each name, index in array.list
+						if view == undefined
+							option(value='#{index}')= name
+						else if view == 'huge'
+							option(class='chosen_huge_mod',value='#{index}', data-img='#{array.img[index]}')= name
+			else
+				select.f_c_field(id='#{field_id}', class='#{select_class}', data-placeholder="#{title}")
+					option
+					each name, index in array.list
+						option(value='#{index}')= name
+
+mixin form_field_select_v2(title, array, field_id, block_class_mod, class_mod, select_class, multiple, chosen_mod)
+	if chosen_mod == undefined
+		- chosen_mod = false
+	if field_id == false
+		- field_id = title.replace(/\s/g, '_').replace(/[.,:;(){}/?!@#$%&*]/g, '')
+	else
+		- field_id = field_id.replace(/\s/g, '_').replace(/[.,:;(){}/?!@#$%&*]/g, '')
+	dl.form_cell(class='#{block_class_mod}')
+		dt.form_c_hline(class='#{class_mod}')
+			label(for='#{field_id}') #{title}
+		dd.form_c_f_w(class='#{class_mod}')
+			if multiple == true
+				select.f_c_field(id='#{field_id}', class='#{select_class}', data-placeholder="#{title}",multiple)
+					if chosen_mod == true
+						option
+					each name, index in array.list
+						option(value='#{index}')= name
+			else
+				select.f_c_field(id='#{field_id}', class='#{select_class}', data-placeholder="#{title}")
+					if chosen_mod == true
+						option
+					each name, index in array.list
+						option(value='#{index}')= name
+
+mixin form_field_select_v3(title, array, field_id, block_class_mod, class_mod, select_class, multiple, chosen_mod)
+	-var count = 0
+	if chosen_mod == undefined
+		- chosen_mod = false
+	if field_id == false
+		- field_id = title.replace(/\s/g, '_').replace(/[.,:;(){}/?!@#$%&*]/g, '')
+	else
+		- field_id = field_id.replace(/\s/g, '_').replace(/[.,:;(){}/?!@#$%&*]/g, '')
+	dl.form_cell(class='#{block_class_mod}')
+		dt.form_c_hline(class='#{class_mod}')
+			label(for='#{field_id}') #{title}
+		dd.form_c_f_w(class='#{class_mod}')
+			if multiple == true
+				select.f_c_field(id='#{field_id}', class='#{select_class}', data-placeholder="#{title}",multiple="multiple")
+					each item, index in array
+						optgroup(label='#{item.name}')
+							each items, index in item.list
+								option(value='#{count}')= items
+								-count++
+			else
+				select.f_c_field(id='#{field_id}', class='#{select_class}', data-placeholder="#{title}")
+					if chosen_mod == true
+						option
+					each item, index in array.list
+						option(value='#{index}')= item
+
+
+
+mixin form_field_select_v4(title, array, field_id, block_class_mod, class_mod, select_class, multiple)
+	if field_id == false
+		- field_id = title.replace(/\s/g, '_').replace(/[.,:;(){}/?!@#$%&*]/g, '')
+	else
+		- field_id = field_id.replace(/\s/g, '_').replace(/[.,:;(){}/?!@#$%&*]/g, '')
+	dl.form_cell(class='#{block_class_mod}')
+		dt.form_c_hline(class='#{class_mod}')
+			label(for='#{field_id}') #{title}
+		dd.form_c_f_w(class='#{class_mod}')
+			select.f_c_field(id='#{field_id}', class='#{select_class}', data-placeholder="#{title}")
+				option
+				each item, index in array.list
+					option(value='#{index}')= item
+
+mixin gl_action_block(array)
+	.gl_action_block(class=array.class_mod)
+		a.gl_action_trigger_butt(class=array.tr_butt_class, href='', title='')= array.tr_butt_text
+		ul.gl_action_list(class=array.class_mod)
+			each item in array.a_butt_list
+				li.gl_action_item(class=array.class_mod)
+					a.gl_action_butt(class="#{array.class_mod} #{item.a_butt_class}",href='', title='#{item.a_butt_text}')= item.a_butt_text
+
+mixin form_field_textarea(title,field_id, block_class_mod, class_mod, select_class)
+	dl.form_cell(class='#{block_class_mod}')
+		dt.form_c_hline(class='#{class_mod}')
+			label(for='#{field_id}') #{title}
+		dd.form_c_f_w(class='#{class_mod}')
+			textarea.f_c_field(id='#{field_id}',class='#{select_class}', placeholder='#{title}')
+
+mixin form_field_v2(title,field_id, block_class_mod, class_mod, butt_class)
+	dl.form_cell(class='#{block_class_mod}')
+		dt.form_c_hline(class='#{class_mod}')
+			label(for='#{field_id}') #{title}
+		dd.form_c_f_w.form_flex_mod(class='#{class_mod}')
+			input.f_c_field.clear_butt_mod.form_flex_mod(type='text', id='#{field_id}', placeholder='#{title}')
+			span.f_c_field_clear_butt
+			div(class='#{butt_class}')
+
+mixin form_field_checkbox_radio(title,field_id, block_class_mod, class_mod, type, checkbox_radio_title,name, checkbox_radio_block_class_mod, checkbox_radio_class_mod)
+	dl.form_cell(class='#{block_class_mod}')
+		dt.form_c_hline(class='#{class_mod}')
+			label(for='#{field_id}') #{title}
+		dd.form_c_f_w.form_flex_mod(class='#{class_mod}')
+			div.lbl_r_ch_block(class='#{checkbox_radio_block_class_mod}')
+				input.lbl_inp_rb_ch(name='#{name}', type='#{type}', class='#{checkbox_radio_class_mod}', id='#{field_id}')
+				span.lbl_rb_ch_text(class='#{checkbox_radio_class_mod}') #{checkbox_radio_title}
+
+mixin breadcrumbs(array)
+	ul.breadcrumbs_list
+		each crumb, index in array
+			li.breadcrumbs_l_item
+				- if (index == array.length - 1)
+					span.breadcrumbs_link=crumb.text
+				- else
+					a.breadcrumbs_link(href=crumb.link, data-ind=index, data=array.length)=crumb.text
+
+mixin static_title_block(array)
+	.static_title_block(class='#{array.class_mod}')
+		.static_title_b_hline!=array.hline
+		-var test = array.name.length
+		if test == 1
+			.static_title_content!=array.name
+		else
+			ul.static_title_list
+				each name, index in array.name
+					li.static_title_l_item!=name
+
+
+mixin head_old(array)
+	meta(charset='UTF-8')
+	title!=array.title_inner
+	meta(name="viewport", content="width=device-width, user-scalable=no")
+	meta(name="SKYPE_TOOLBAR", content="SKYPE_TOOLBAR_PARSER_COMPATIBLE")
+	meta(name="apple-mobile-web-app-capable", content="yes")
+	meta(name="author", content="iq-project")
+	meta(name="keywords", content="#{array.sub_keywords}")
+	meta(name="description", content="#{array.sub_description}")
+	meta(property="og:site_name", content="iq-project")
+	meta(property="og:type", content="website")
+	meta(property="og:url", content="http://iq-project.ru/")
+	meta(property="og:title", content="#{array.title_inner}")
+	meta(property="og:description", content="#{array.sub_description}")
+	meta(property="og:image", content="http://iq-project.ru/#{array.main_img}")
+	meta(property="og:locale", content="ru_RU")
+	meta(name="robots", content="all")
+	meta(name="revisit-after", content="3 days")
+	meta(name="format-detection", content="telephone=no")
+	link(type="image/x-icon", rel="shortcut icon", href="/favicon.ico")
+	link(rel="shortcut icon", href="/favicon.ico", type="image/x-icon")
+	link(rel="apple-touch-icon", href="/apple-touch-icon.png")
+	link(rel="apple-touch-icon", sizes="57x57", href="/apple-touch-icon-57x57.png")
+	link(rel="apple-touch-icon", sizes="72x72", href="/apple-touch-icon-72x72.png")
+	link(rel="apple-touch-icon", sizes="76x76", href="/apple-touch-icon-76x76.png")
+	link(rel="apple-touch-icon", sizes="114x114", href="/apple-touch-icon-114x114.png")
+	link(rel="apple-touch-icon", sizes="120x120", href="/apple-touch-icon-120x120.png")
+	link(rel="apple-touch-icon", sizes="144x144", href="/apple-touch-icon-144x144.png")
+	link(rel="apple-touch-icon", sizes="152x152", href="/apple-touch-icon-152x152.png")
+	script(type='text/javascript', src='js/modernizr_custom_last.js')
+	script(type='text/javascript', src='js/jquery-1.11.1.min.js')
+	link(rel='stylesheet', media='all', type='text/css', href='styles/main_global.css')
+	script(type='text/javascript', src='js/all.js')
+
+
+mixin head(array)
+	meta(charset='UTF-8')
+	title!=array.title_inner
+	meta(name="viewport", content="width=960")
+	meta(name="SKYPE_TOOLBAR", content="SKYPE_TOOLBAR_PARSER_COMPATIBLE")
+	meta(name="apple-mobile-web-app-capable", content="yes")
+	meta(name="format-detection", content="telephone=no")
+	link(type="image/x-icon", rel="shortcut icon", href="favicon.ico")
+	link(rel="shortcut icon", href="favicon.ico", type="image/x-icon")
+	link(rel="apple-touch-icon", href="apple-touch-icon.png")
+	link(rel="apple-touch-icon", sizes="57x57", href="apple-touch-icon-57x57.png")
+	link(rel="apple-touch-icon", sizes="72x72", href="apple-touch-icon-72x72.png")
+	link(rel="apple-touch-icon", sizes="76x76", href="apple-touch-icon-76x76.png")
+	link(rel="apple-touch-icon", sizes="114x114", href="apple-touch-icon-114x114.png")
+	link(rel="apple-touch-icon", sizes="120x120", href="apple-touch-icon-120x120.png")
+	link(rel="apple-touch-icon", sizes="144x144", href="apple-touch-icon-144x144.png")
+	link(rel="apple-touch-icon", sizes="152x152", href="apple-touch-icon-152x152.png")
+	script(type='text/javascript', src='js/jquery-1.11.1.min.js')
+	if array.header_view == 'home_mod'
+		link(rel='stylesheet', media='all', type='text/css', href='styles/home_global.css')
+		script(type='text/javascript', src='js/jquery.easing.1.3.js')
+		script(type='text/javascript', src='js/all_home.js')
+	else
+		link(rel='stylesheet', media='all', type='text/css', href='styles/main_global.css')
+		each source in head_asset.global.scripts
+			script(type='text/javascript', src='#{source}')
+		if array.header_view == 'map_view'
+			each source in head_asset.map_view.scripts
+				script(type='text/javascript', src='#{source}')
+		script(type='text/javascript', src='js/all.js')
+
+
+
+mixin pagination(array)
+	.pagination_block(class='#{array.pagination_class}')
+		ul.pages_list(class='#{array.pagination_class}')
+			if array.pagination_arrows != false
+				li.pages_l_item.page_l_item_prev(class='#{array.pagination_class}')
+					span.pagination_arrow_left(class='#{array.pagination_butt_class}')
+			each val, index in array.page_number
+				if index + 1 >= array.pagination_max && index == array.page_number.length - 2
+					li.pages_l_item.pagination_page_number(class='#{array.pagination_class}')
+						span.pagination_dots
+				if index + 1 < array.pagination_max || index == array.page_number.length - 1
+					li.pages_l_item.pagination_page_number(class='#{array.pagination_class}')
+						span(class='#{array.pagination_butt_class}', title="#{val}") #{val}
+			if array.pagination_arrows != false
+				li.pages_l_item.page_l_item_next(class='#{array.pagination_class}')
+					span.pagination_arrow_right(class='#{array.pagination_butt_class}')
+
+
+
+
+
+
+mixin msg_footer
+	footer.msg_footer
+		.msg_comment_form
+			+user_block(user_block_msg_comment)
+			+form_field('Add a comment...', false, 'form_cell_v1_mod', 'form_v1_mod hline_hide_mod', 'default_mod comment_mod')
+			.butt_wrap.msg_comment_mod
+				.butt_comment_send Send
+
+mixin msg_footer_2
+	footer.msg_footer
+		.msg_comment_form
+			+user_block(user_block_msg_comment)
+			+form_field('Add a comment...', false, 'form_cell_v1_mod', 'form_v1_mod hline_hide_mod', 'default_mod comment_mod')
+			.butt_wrap.msg_comment_mod
+				.attach_butt Add attachment
+				.butt_comment_send Send
+
+mixin header(array)
+	if array.header_view != false
+		header.header(class="#{array.header_view}")
+			a.logo(class="#{array.header_view}")(href='index.html')
+				if array.header_view == 'home_mod'
+					span.logo_text greenfence
+			if array.header_view == 'home_mod'
+				time.relise_date(datetime="2015-05-01") Coming May 2015
+				a.contact_link(href='mailto:info@greenfence.com', title='Contact') Contact
+
+			if array.header_view == 'standard' || array.header_view == 'map_view'
+				+form_field('Search for facilities, products, employees etc...','search', 'form_cell_v1_mod header_search', 'form_v1_mod hline_hide_mod header_mod', 'second_mod header_mod')
+				a.user_menu_msg_center_butt(href='messages_center.html', title='Messaging Center')
+				nav.user_menu_block
+					.user_menu_butt Menu
+						span.user_menu_butt_decor
+					.user_menu_w
+						ul.section_menu_list.header_mod
+							li.section_menu_l_item.header_mod
+								a.section_menu_link.header_mod(href='messages_center.html', title='Messaging Center') Messaging Center
+							li.section_menu_l_item.header_mod
+								a.section_menu_link.header_mod(href='', title='Wizard Menu') Wizard Menu
+								ul.section_menu_list.header_mod.sub_mod
+									each item, index in side_menu_1
+										li.section_menu_l_item.header_mod
+											a.section_menu_link.header_mod(href='', title='Add #{item.name}') Add #{item.name}
+												if item.amount != false
+													span.section_m_link_count= item.amount
+						.section_menu_list.header_2_mod
+							.section_menu_l_item.header_2_mod
+								.section_menu_link.header_2_mod Account Menu
+							ul
+								each item, index in user_menu_2
+									li.section_menu_l_item.header_2_mod
+										a.section_menu_link.header_2_mod.hovered_2_mod(href='', title='#{item}')= item
+						.invite_users_butt Invite Users
+
+				+user_block(user_block_header)
+
+
+mixin doc_block(array)
+	.doc_block(class='#{array.class_mod}')
+		.doc_title(class='#{array.class_mod} #{array.title_class_mod}')=array.name
+		if array.info_text != undefined
+			.doc_info(class='#{array.class_mod} #{array.info_class_mod}')=array.info_text
+		.doc_action(class='#{array.class_mod} #{array.action_class_mod}',title='#{array.action_title}')=array.action_text
+
+
+
+mixin menu_cat_cell(array)
+	.menu_cat_cell
+		.menu_cat_title=array.name
+		if array.amount != false
+			.menu_cat_amount=array.amount
+		.menu_cat_view
+			if array.view == 1
+				.menu_cat_option_butt.no_filled_mod
+					.menu_cat_option_butt_text.no_filled_mod(data-option-text='Add', data-option-sec-text='No #{array.name} Added')
+			if array.view == 2
+				.menu_cat_option_butt.filled_mod
+					.menu_cat_option_butt_text.filled_mod(data-option-text='View All', data-option-open-text='Collapse')
+				.menu_cat_view_hidden_b
+					+form_field('Tape name of '+array.placeholder, false, 'form_cell_v1_mod', 'form_v1_mod hline_hide_mod menu_cat_search_mod', 'third_mod menu_cat_search_mod')
+					ul.menu_cat_search_result
+						li.menu_cat_search_result_item
+							.menu_cat_s_result_el #{array.placeholder} name #
+						li.menu_cat_search_result_item
+							.menu_cat_s_result_el #{array.placeholder} name #
+						li.menu_cat_search_result_item
+							.menu_cat_s_result_el #{array.placeholder} name #
+			if array.view == 3
+				.menu_cat_option_butt.filled_mod
+					.menu_cat_option_butt_text.filled_mod(data-option-text='View All', data-option-open-text='Collapse')
+				.menu_cat_view_hidden_b
+					+form_field('Tape name of '+array.placeholder, false, 'form_cell_v1_mod', 'form_v1_mod hline_hide_mod menu_cat_search_mod', 'third_mod menu_cat_search_mod')
+					.folders_block
+						.folders_head
+							.folders_head_hline Filter by Folder
+							.folders_head_butt.add_edit_mod Edit/Add
+						.folder_block
+							.folder_b_head
+								.folder_b_head_title Folder Name
+								.folder_b_amount 30
+							ul.folder_b_action_list
+								li.folder_b_action_l_item
+									span.folder_b_action Edit
+								li.folder_b_action_l_item
+									span.folder_b_action.share_mod Share
+							+doc_block(doc_block_1)
+						+doc_block(doc_block_1)
+
+mixin user_menu()
+	ul.user_menu
+		each val, index in user_menu.title
+			li.user_menu_item
+				if index != 2 && index != 3
+					if index == 4
+						a.user_menu_link.message_mod(class="icon_mod_#{index+1}",data-messages='10',href='')
+							span.user_menu_link_title=val
+					else
+						a.user_menu_link(class="icon_mod_#{index+1} #{index == 1 ? 'invite_user_butt' : ''}",href='')
+							span.user_menu_link_title=val
+				else
+
+					.user_menu_link(class="icon_mod_#{index+1}",href='')
+						ul.user_sub_menu(class="#{index== 2 ? 'help_center_mod':'upload_mod'}")
+							if index == 2
+								each help_center, index in user_menu.help_center
+									li.user_sub_menu_item
+										a.user_sub_menu_link.help_center_mod(href='', title='')
+											span.user_sub_m_l_hline(class="#{help_center.icon}")=help_center.hline
+											span.user_sub_m_l_text=help_center.text
+							if index == 3
+								each text in admin_menu
+									li.user_sub_menu_item
+										a.user_sub_menu_link.upload_mod(href='', title='', data-link-text='Add') Add #{text.name}
+
+

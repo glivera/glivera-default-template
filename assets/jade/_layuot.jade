@@ -1,0 +1,21 @@
+include templates/global_vars
+
+- var array = '';
+
+
+block vars
+
+doctype
+html(lang="ru", xmlns:og="http://ogp.me/ns#")
+	head
+		+head(array)
+	body.no_animation.develop_mod(class='#{array.body_class}', ontouchstart="")
+		if array.body_class != 'login_page'
+			+header(array)
+		else if array.body_class != 'home_page'
+			+header(array)
+		.wrapper(class='#{array.layuot_mod}')
+			.base(class='#{array.layuot_mod}')
+				block content_block
+
+		block local_popup

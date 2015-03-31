@@ -1,0 +1,52 @@
+@include style_separator(global) {
+
+	@include font-include('test');
+
+	%example {
+		&:before {
+			font-family: $icons_font_1;
+			speak: none;
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			//				line-height: 1;
+
+			/* Better Font Rendering =========== */
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+	}
+
+	%icons_before_after {
+		&:before,
+		&:after {
+			font-family: $icons_font_1;
+			speak: none;
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+	}
+
+	%icons_after {
+		&:after {
+			font-family: $icons_font_1;
+			speak: none;
+			font-style: normal;
+			font-weight: normal;
+			font-variant: normal;
+			text-transform: none;
+			-webkit-font-smoothing: antialiased;
+			-moz-osx-font-smoothing: grayscale;
+		}
+	}
+
+	%example:before {
+		content: "\e60b";
+	}
+}
+
