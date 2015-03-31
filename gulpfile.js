@@ -3,6 +3,7 @@ var gulp = require('gulp'), // Сообственно Gulp JS
 		sass = require('gulp-sass'), // Плагин для Sass
 		csso = require('gulp-csso'), // Минификация CSS
 		imagemin = require('gulp-imagemin'), // Минификация изображений
+		pngquant = require('imagemin-pngquant'),
 		uglify = require('gulp-uglify'), // Минификация JS
 		concat = require('gulp-concat'), // Склейка файлов
 		connect = require('gulp-connect');
@@ -34,6 +35,11 @@ gulp.task('js', function () {
 
 gulp.task('image', function () {
 	return gulp.src('assets/i/**/*')
+	.pipe(imagemin({
+				progressive: true,
+				svgoPlugins: [{removeViewBox: false}],
+				use: [pngquant()]
+			}))
 			.pipe(gulp.dest(outputDir + '/i'));
 });
 
