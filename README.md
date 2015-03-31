@@ -1,4 +1,6 @@
 # glivera-default-template
+## npm
+    npm init
 ## gulp
     npm install --global gulp (if don't install yet)
     
