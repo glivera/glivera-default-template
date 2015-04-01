@@ -46,7 +46,9 @@ gulp.task('image', function () {
 
 gulp.task('watch', function () {
 	gulp.watch('assets/jade/*.jade', ['jade']);
-	gulp.watch('assets/sass/**/*.scss', ['sass']);
+	gulp.watch('assets/jade/templates/*.jade', ['jade']);
+	gulp.watch('assets/sass/includes/*.scss', ['sass']);
+	gulp.watch('assets/sass/*.scss', ['sass']);
 	gulp.watch('assets/js/*.js', ['js']);
 });
 
