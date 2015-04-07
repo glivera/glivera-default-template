@@ -9,7 +9,7 @@ var gulp = require('gulp'), // Сообственно Gulp JS
 		connect = require('gulp-connect'),
 		open = require('gulp-open');
 
-var outputDir = 'public';
+var outputDir = 'www';
 
 gulp.task('sass', function () {
 	gulp.src('sass/*.scss')
@@ -46,8 +46,8 @@ gulp.task('html', function () {
 });
 
 gulp.task('js', function () {
-	return gulp.src('js/*.js')
-			.pipe(gulp.dest(outputDir + '/js'))
+	return gulp.src(outputDir+'/js/*.js')
+			//.pipe(gulp.dest(outputDir + '/js'))
 			.pipe(connect.reload());
 });
 
@@ -67,7 +67,7 @@ gulp.task('watch', function () {
 	//gulp.watch('jade/templates/*.jade', ['jade']);
 	gulp.watch(outputDir+'/styles/*.css', ['css']);
 	//gulp.watch('sass/*.scss', ['sass']);
-	gulp.watch(outputDir+'js/*.js', ['js']);
+	gulp.watch(outputDir+'/js/*.js', ['js']);
 });
 
 gulp.task('connect', function () {
