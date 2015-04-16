@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<TaskOptions>
+  <TaskOptions>
+    <option name="arguments" value="$FileName$ --pretty --out $ProjectFileDir$\public" />
+    <option name="checkSyntaxErrors" value="true" />
+    <option name="description" value="Compiles .jade files into .html files" />
+    <option name="exitCodeBehavior" value="ERROR" />
+    <option name="fileExtension" value="jade" />
+    <option name="immediateSync" value="false" />
+    <option name="name" value="Jade" />
+    <option name="output" value="$FileNameWithoutExtension$.html" />
+    <option name="outputFilters">
+      <array />
+    </option>
+    <option name="outputFromStdout" value="false" />
+    <option name="passParentEnvs" value="true" />
+    <option name="program" value="C:/Program Files/nodejs/jade.cmd" />
+    <option name="scopeName" value="Project Files" />
+    <option name="trackOnlyRoot" value="true" />
+    <option name="workingDir" value="$FileDir$" />
+    <envs />
+  </TaskOptions>
+  <TaskOptions>
+    <option name="arguments" value="$FileName$ $ProjectFileDir$\public\styles\$FileNameWithoutExtension$.css" />
+    <option name="checkSyntaxErrors" value="true" />
+    <option name="description" value="Compiles .scss files into .css files" />
+    <option name="exitCodeBehavior" value="ERROR" />
+    <option name="fileExtension" value="scss" />
+    <option name="immediateSync" value="false" />
+    <option name="name" value="SCSS node" />
+    <option name="output" value="$FileNameWithoutExtension$.css" />
+    <option name="outputFilters">
+      <array>
+        <FilterInfo>
+          <option name="description" value="" />
+          <option name="name" value="Filter 1" />
+          <option name="regExp" value="$FILE_PATH$\*_global" />
+        </FilterInfo>
+      </array>
+    </option>
+    <option name="outputFromStdout" value="false" />
+    <option name="passParentEnvs" value="true" />
+    <option name="program" value="C:/Users/Andrey/AppData/Roaming/npm/node-sass.cmd" />
+    <option name="scopeName" value="Project Files" />
+    <option name="trackOnlyRoot" value="true" />
+    <option name="workingDir" value="$FileDir$" />
+    <envs />
+  </TaskOptions>
+</TaskOptions>
+

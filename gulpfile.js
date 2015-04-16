@@ -8,17 +8,18 @@ var gulp = require('gulp'), // Сообственно Gulp JS
 		concat = require('gulp-concat'), // Склейка файлов
 		connect = require('gulp-connect');
 
-var outputDir = 'public';
+var assetsDir = 'assets/';
+var outputDir = 'public/';
 
 gulp.task('sass', function () {
-	gulp.src('assets/sass/**/*.scss')
+	gulp.src(assetsDir+'sass/**/*.scss')
 			.pipe(sass()) // собираем sass
-			.pipe(gulp.dest(outputDir + '/styles/'))
+			.pipe(gulp.dest(outputDir + 'styles/'))
 			.pipe(connect.reload()); // записываем css
 });
 
 gulp.task('jade', function () {
-	gulp.src(['assets/jade/*.jade', '!assets/jade/_*.jade'])
+	gulp.src([assetsDir+'jade/*.jade', '!'+assetsDir+'jade/_*.jade'])
 			.pipe(jade({
 				pretty: true
 			}))
@@ -28,13 +29,13 @@ gulp.task('jade', function () {
 });
 
 gulp.task('js', function () {
-	return gulp.src('assets/js/*.js')
+	return gulp.src(assetsDir+'js/*.js')
 			.pipe(gulp.dest(outputDir + '/js'))
 			.pipe(connect.reload());
 });
 
 gulp.task('image', function () {
-	return gulp.src('assets/i/**/*')
+	return gulp.src(assetsDir+'i/**/*')
 	.pipe(imagemin({
 				progressive: true,
 				svgoPlugins: [{removeViewBox: false}],
@@ -45,11 +46,11 @@ gulp.task('image', function () {
 
 
 gulp.task('watch', function () {
-	gulp.watch('assets/jade/*.jade', ['jade']);
-	gulp.watch('assets/jade/templates/*.jade', ['jade']);
-	gulp.watch('assets/sass/includes/*.scss', ['sass']);
-	gulp.watch('assets/sass/*.scss', ['sass']);
-	gulp.watch('assets/js/*.js', ['js']);
+	gulp.watch(assetsDir+'jade/*.jade', ['jade']);
+	gulp.watch(assetsDir+'jade/templates/*.jade', ['jade']);
+	gulp.watch(assetsDir+'sass/includes/*.scss', ['sass']);
+	gulp.watch(assetsDir+'sass/*.scss', ['sass']);
+	gulp.watch(assetsDir+'js/*.js', ['js']);
 });
 
 gulp.task('connect', function () {

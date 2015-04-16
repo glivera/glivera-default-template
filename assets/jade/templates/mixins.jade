@@ -331,18 +331,7 @@ mixin head(array)
 	link(rel="apple-touch-icon", sizes="144x144", href="apple-touch-icon-144x144.png")
 	link(rel="apple-touch-icon", sizes="152x152", href="apple-touch-icon-152x152.png")
 	script(type='text/javascript', src='js/jquery-1.11.1.min.js')
-	if array.header_view == 'home_mod'
-		link(rel='stylesheet', media='all', type='text/css', href='styles/home_global.css')
-		script(type='text/javascript', src='js/jquery.easing.1.3.js')
-		script(type='text/javascript', src='js/all_home.js')
-	else
-		link(rel='stylesheet', media='all', type='text/css', href='styles/main_global.css')
-		each source in head_asset.global.scripts
-			script(type='text/javascript', src='#{source}')
-		if array.header_view == 'map_view'
-			each source in head_asset.map_view.scripts
-				script(type='text/javascript', src='#{source}')
-		script(type='text/javascript', src='js/all.js')
+	link(rel='stylesheet', media='all', type='text/css', href='styles/main_global.css')
 
 
 
