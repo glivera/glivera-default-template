@@ -1,9 +1,13 @@
+@import "project_vars";
+
 //-------------------------------------------------------global_vars
 
 $pi: 3.14159265359;
 $square_root_of_2: 1.41421356237;
 
 //-------------------------------------------------------global_vars
+$font_name:Arial;
+
 //-------------------------------------------------------mixins
 
 @mixin style_separator($var: false, $var2: false, $var3: false, $var4: false, $var5: false, $var6: false, $var7: false, $var8: false, $var9: false) {
@@ -235,7 +239,7 @@ $square_root_of_2: 1.41421356237;
 //	}
 //}
 
-@mixin font-include($fonts, $path, $font-weight: '../fonts/': normal) {
+@mixin font-include($font_name, $path: '../fonts/', $font-weight: normal) {
 	@font-face {
 		font-family: "#{$font_name}";
 		src: url('#{$path}#{$font_name}.eot');
@@ -1225,6 +1229,6 @@ $square_root_of_2: 1.41421356237;
 
 
 @import "extends";
-@import "project_vars";
+
 @import "project_extends";
 @import "buttons_extends";

@@ -13,11 +13,11 @@
 	@extend %transition_background !optional;
 
 	color: $color_white_g;
-	background-color: $green;
+	background-color: $color_white_g;
 
 	&:hover,
 	&:focus {
-		background-color: darken($green, 10);
+		background-color: darken($color_white_g, 10);
 	}
 
 	&:active {
