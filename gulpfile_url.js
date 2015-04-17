@@ -9,7 +9,7 @@ var gulp = require('gulp'), // Сообственно Gulp JS
 		connect = require('gulp-connect'),
 		open = require('gulp-open');
 
-var assetsDir = 'assets/';
+var assetDir = 'assets/';
 var outputDir = 'public/';
 
 gulp.task('reload', function () {
@@ -18,19 +18,33 @@ gulp.task('reload', function () {
 
 });
 
+gulp.task('init', function () {
+	gulp.src(assetDir+'js/*.js')
+		.pipe(gulp.dest(outputDir + 'js'));
+	gulp.src(assetDir+'fonts/*.*')
+			.pipe(gulp.dest(outputDir + 'fonts'));
+	gulp.src(assetDir + 'i/**/*')
+			.pipe(imagemin({
+				progressive: true,
+				svgoPlugins: [{removeViewBox: false}],
+				use: [pngquant()]
+			}))
+			.pipe(gulp.dest(outputDir + 'i'));
+});
+
 gulp.task('js', function () {
-	return gulp.src(assetsDir+'js/*.js')
+	return gulp.src(assetDir+'js/*.js')
 		.pipe(gulp.dest(outputDir + 'js'));
 });
 
 gulp.task('image', function () {
-	return gulp.src(assetsDir+'i/**/*')
+	return gulp.src(assetDir+'i/**/*')
 	.pipe(imagemin({
 				progressive: true,
 				svgoPlugins: [{removeViewBox: false}],
 				use: [pngquant()]
 			}))
-			.pipe(gulp.dest(outputDir + '/i'));
+			.pipe(gulp.dest(outputDir + 'i'));
 });
 
 
@@ -58,4 +72,4 @@ gulp.task('url', function(){
 });
 
 
-gulp.task('default', ['connect','url','watch']);
+gulp.task('default', ['init','connect','url','watch']);
