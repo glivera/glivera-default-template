@@ -11,6 +11,7 @@ var gulp = require('gulp'), // Сообственно Gulp JS
 
 var assetDir = 'assets/';
 var outputDir = 'public/';
+var $port = 8889;
 
 gulp.task('reload', function () {
 	gulp.src(outputDir+'*.html')
@@ -58,14 +59,14 @@ gulp.task('watch', function () {
 gulp.task('connect', function () {
 	connect.server({
 		root: outputDir,
-		port: 8888,
+		port: $port,
 		livereload: true
 	});
 });
 
 gulp.task('url', function(){
   var options = {
-    url: 'http://localhost:8888',
+    url: 'http://localhost:'+$port,
     app: 'chrome'
   };
   gulp.src(outputDir+'index.html')
