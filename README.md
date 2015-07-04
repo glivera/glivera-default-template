@@ -2,11 +2,8 @@
 ## npm
     npm init
 ## gulp
-    npm install --global gulp (if don't install yet)
+    npm install --global gulp gulp-jade gulp-sass gulp-csso gulp-imagemin imagemin-pngquant gulp-uglify gulp-concat gulp-connect gulp-open --save-dev
     
-    npm install gulp gulp-jade gulp-sass gulp-csso gulp-imagemin imagemin-pngquant gulp-uglify gulp-concat gulp-connect gulp-open --save-dev
+## link packages
+    npm link gulp jade gulp-autoprefixer gulp-clean gulp-connect gulp-iconfont gulp-iconfont-css gulp-imagemin gulp-inline-image gulp-jade gulp-livereload gulp-open gulp-plumber gulp-sass imagemin-pngquant
     
-## bower
-    npm install -g bower (if don't install yet)
-
-    bower install --save jquery
